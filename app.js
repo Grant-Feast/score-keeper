@@ -18,8 +18,12 @@ playerOne.addEventListener('click', function () {
       // If player ones score and the winning score match the game is over and incrementation is stoped.
       if(p1Score === winningScore) {
         isGameOver = true;
-        p1Display.classList.add('winner');
-        p2Display.classList.add('looser');
+        // Displays each players points in either green or red depending who has won.
+        p1Display.classList.add('has-text-success');
+        p2Display.classList.add('has-text-danger');
+        // Disable buttons once a player has won.
+        playerOne.disabled = true;
+        playerTwo.disabled = true;
       }
       // Change the display of the left span to player ones score.
       p1Display.textContent = p1Score;
@@ -31,26 +35,33 @@ playerTwo.addEventListener('click', function () {
     p2Score += 1;
     if(p2Score === winningScore) {
       isGameOver = true;
-      p2Display.classList.add('winner');
-      p1Display.classList.add('looser');
+      p2Display.classList.add('has-text-success');
+      p1Display.classList.add('has-text-danger');
+      playerOne.disabled = true;
+      playerTwo.disabled = true;
     }
     p2Display.textContent = p2Score;
   }
 })
 
+// Add an event listener to check when there is a change in the select and then reset the game.
 playTo.addEventListener('change', function () {
   winningScore = parseInt(this.value);
   resetGame();
 })
 
+// Add an event listener to the reset button passing in the resetGame function but not calling it.
 reset.addEventListener('click', resetGame);
 
+// Function to reset the game entirely.
 function resetGame() {
   isGameOver = false;
   p1Score = 0;
   p2Score = 0;
   p1Display.textContent = 0;
   p2Display.textContent = 0;
-  p1Display.classList.remove('winner', 'looser');
-  p2Display.classList.remove('winner', 'looser');
+  p1Display.classList.remove('has-text-success', 'has-text-danger');
+  p2Display.classList.remove('has-text-success', 'has-text-danger');
+  playerOne.disabled = false;
+  playerTwo.disabled = false;
 }
